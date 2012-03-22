@@ -29,8 +29,17 @@ class LRUCacheTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($lru->get($key), $data);
         $this->assertEquals($lru->get($key2), $data2);
-        
     }
 
     public function testPut() {}
+
+    public function testMassivePut() {
+        $numEntries = 100000;
+        $lru = new LRUCache($numEntries);
+
+        while($numEntries > 0) {
+            $lru->put($numEntries - 9999, 'some value...');
+            $numEntries--;
+        }
+    }
 }
