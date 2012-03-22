@@ -1,6 +1,6 @@
 <?php
 
-class LRU {
+class LRUCache {
 
     private $head;
     private $tail;
@@ -10,17 +10,18 @@ class LRU {
     public function __construct($capacity) {
         $this->capacity = $capacity;
         $this->hashmap = array();
-        $this->head = null;
-        $this->tail = null;
+        $this->head = new Node(null);
+        $this->tail = new Node(null);
 
-        $this->head.setNext($this->tail);
-        $this->tail.setPrevious($this->head);
+        $this->head->setNext($this->tail);
+        $this->tail->setPrevious($this->head);
     }
 
     public function get($key) {
-        $node = $this->hashmap[$key];
 
-        if ($node === null) { return null; }
+        if (!isset($this->hashmap[$key])) { return null; }
+
+        $node = $this->hashmap[$key];
         if (count($this->hashmap) == 1) { return $node->getData(); }
 
         // refresh the access
@@ -28,13 +29,34 @@ class LRU {
         $this->attach($this->head, $node);
     }
 
-    public function put($key, $data) {}
+    public function put($key, $data) {
+        if ($this->capacity <= 0) { return false; }
+        if (isset($this->hashmap[$key]) && !empty($this->hashmap[$key])) {
+            $node = $this->hashmap[$key];
+            // update data
+            $this->detach($node);
+            $this->attach($this->head, $node);
+            $node->setData($data);
+        }
+        else {
+            $node = new Node($data);
+            $this->hashmap[$key] = $node;
+            $this->attach($this->head, $node);
+
+            // check if cache is full
+            if (count($this->hashmap) > $this->capacity) {
+                // we're full, remove the tail
+                $this->detach($this->tail->getPrevious());
+                unset($this->hashmap[$key]);
+            }
+        }
+    }
 
     private function attach($head, $node) {
         $node->setPrevious($head);
         $node->setNext($head->getNext());
-        $node->getNext()->setPrevious(node);
-        $node->getPrevious()->setNext(node);
+        $node->getNext()->setPrevious($node);
+        $node->getPrevious()->setNext($node);
     }
 
     private function detach($node) {
