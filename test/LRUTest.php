@@ -4,9 +4,6 @@ require_once(dirname(__FILE__).'/../LRUCache.php');
 
 class LRUCacheTest extends PHPUnit_Framework_TestCase {
 
-    public function setUp() {
-    }
-
     public function testStartsEmpty() {
         $lru = new LRUCache(1000);
         $this->assertNull($lru->get(1));
