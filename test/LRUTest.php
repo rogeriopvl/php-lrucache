@@ -1,6 +1,6 @@
 <?php
 require_once('PHPUnit/Autoload.php');
-require_once(dirname(__FILE__).'/../LRUCache.php');
+require_once(dirname(__FILE__).'/../LRUCache/LRUCache.php');
 
 class LRUCacheTest extends PHPUnit_Framework_TestCase {
 
