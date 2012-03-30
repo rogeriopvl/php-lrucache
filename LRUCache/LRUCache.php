@@ -28,8 +28,8 @@ class LRUCache {
     public function __construct($capacity) {
         $this->capacity = $capacity;
         $this->hashmap = array();
-        $this->head = new Node(null);
-        $this->tail = new Node(null);
+        $this->head = new Node(null, null);
+        $this->tail = new Node(null, null);
 
         $this->head->setNext($this->tail);
         $this->tail->setPrevious($this->head);
@@ -70,15 +70,16 @@ class LRUCache {
             $node->setData($data);
         }
         else {
-            $node = new Node($data);
+            $node = new Node($key, $data);
             $this->hashmap[$key] = $node;
             $this->attach($this->head, $node);
 
             // check if cache is full
             if (count($this->hashmap) > $this->capacity) {
                 // we're full, remove the tail
-                $this->detach($this->tail->getPrevious());
-                unset($this->hashmap[$key]);
+                $nodeToRemove = $this->tail->getPrevious();
+                $this->detach($nodeToRemove);
+                unset($this->hashmap[$nodeToRemove->getKey()]);
             }
         }
         return true;
@@ -112,6 +113,14 @@ class LRUCache {
  */
 class Node {
 
+    /**
+     * the key of the node, this might seem reduntant,
+     * but without this duplication, we don't have a fast way
+     * to retrieve the key of a node when we wan't to remove it
+     * from the hashmap.
+     */
+    private $key;
+
     // the content of the node
     private $data;
 
@@ -122,9 +131,11 @@ class Node {
     private $previous;
 
     /**
+     * @param string $key the key of the node
      * @param string $data the content of the node
      */
-    public function __construct($data) {
+    public function __construct($key, $data) {
+        $this->key = $key;
         $this->data = $data;
     }
 
@@ -150,6 +161,14 @@ class Node {
      */
     public function setPrevious($previous) {
         $this->previous = $previous;
+    }
+
+    /**
+     * Returns the node key
+     * @return string the key of the node
+     */
+    public function getKey() {
+        return $this->key;
     }
 
     /**
