@@ -47,12 +47,12 @@ class LRUCacheTest extends PHPUnit_Framework_TestCase {
         $lru = new LRUCache($numEntries);
 
         while($numEntries > 0) {
-            $lru->put($numEntries - 9999, 'some value...');
+            $lru->put($numEntries - 899999, 'some value...');
             $numEntries--;
         }
     }
 
-    public function testPutAfterRemove() {
+    public function testPutWhenFull() {
         $lru = new LRUCache(3);
 
         $key1 = 'key1';
