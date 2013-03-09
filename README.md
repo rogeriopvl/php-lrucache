@@ -14,13 +14,25 @@ This code is in it's early stages. I need to write more tests to find out the po
 
 This implementation is similar to a [LinkedHashMap][2]. Right now I'm just messing around with the code and decided to keep it simple, using a simple associative array as a naive hashmap. 
 
+## Install (composer)
+
+Add the package into your `composer.json` file:
+
+    "require": {
+        "lrucache/lrucache": "master-dev"
+    }
+
+Then run the command:
+
+    composer install
+
 ## Usage
 
 Usage is pretty simple:
 
-    require_once('LRUCache/LRUCache.php');
+    require_once('vendor/autoload.php'); // composer autoader
     
-    $cache = new LRUCache(1000);
+    $cache = new \LRUCache\LRUCache(1000);
     
     $cache->put('mykey', 'arrow to the knee');
     
