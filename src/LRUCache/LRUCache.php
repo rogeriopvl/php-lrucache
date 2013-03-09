@@ -1,5 +1,7 @@
 <?php
 
+namespace LRUCache;
+
 /**
  * Class that implements the concept of an LRU Cache
  * using an associative array as a naive hashmap, and a doubly linked list

@@ -1,16 +1,16 @@
 <?php
 require_once('PHPUnit/Autoload.php');
-require_once(dirname(__FILE__).'/../LRUCache/LRUCache.php');
+require_once(dirname(__FILE__).'/../src/LRUCache/LRUCache.php');
 
 class LRUCacheTest extends PHPUnit_Framework_TestCase {
 
     public function testStartsEmpty() {
-        $lru = new LRUCache(1000);
+        $lru = new \LRUCache\LRUCache(1000);
         $this->assertNull($lru->get(1));
     }
 
     public function testGet() {
-        $lru = new LRUCache(1000);
+        $lru = new \LRUCache\LRUCache(1000);
         $key = 'key1';
         $data = 'content for key1';
         $lru->put($key, $data);
@@ -18,7 +18,7 @@ class LRUCacheTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testMultipleGet() {
-        $lru = new LRUCache(1000);
+        $lru = new \LRUCache\LRUCache(1000);
         $key = 'key1';
         $data = 'content for key1';
         $key2 = 'key2';
@@ -33,7 +33,7 @@ class LRUCacheTest extends PHPUnit_Framework_TestCase {
 
     public function testPut() {
         $numEntries = 1000;
-        $lru = new LRUCache($numEntries);
+        $lru = new \LRUCache\LRUCache($numEntries);
 
         $key1 = 'mykey1';
         $value1 = 'myvaluefromkey1';
@@ -44,16 +44,16 @@ class LRUCacheTest extends PHPUnit_Framework_TestCase {
 
     public function testMassivePut() {
         $numEntries = 90000;
-        $lru = new LRUCache($numEntries);
+        $lru = new \LRUCache\LRUCache($numEntries);
 
         while($numEntries > 0) {
-            $lru->put($numEntries - 9999, 'some value...');
+            $lru->put($numEntries - 899999, 'some value...');
             $numEntries--;
         }
     }
 
-    public function testPutAfterRemove() {
-        $lru = new LRUCache(3);
+    public function testPutWhenFull() {
+        $lru = new \LRUCache\LRUCache(3);
 
         $key1 = 'key1';
         $value1 = 'value1forkey1';
