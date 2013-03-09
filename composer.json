@@ -1,0 +1,26 @@
+{
+    "name": "lrucache/lrucache",
+    "description": "PHP LRU Cache implementation",
+    "keywords": ["php", "lru", "cache"],
+    "homepage": "https://github.com/rogeriopvl/php-lrucache",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rogério Vicente",
+            "email": "rogeriopvl@gmail.com",
+            "homepage": "http://rogeriopvl.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.10"
+    },
+    "autoload": {
+        "psr-0": {
+            "LRUCache": "src"
+        }
+    }
+}
