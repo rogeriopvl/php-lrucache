@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rogeriopvl/php-lrucache.png)](https://travis-ci.org/rogeriopvl/php-lrucache)
+
 # PHP LRU Cache implementation
 
 ## Intro
