@@ -52,6 +52,28 @@ class LRUCacheTest extends PHPUnit_Framework_TestCase {
         }
     }
 
+    public function testRemove() {
+        $numEntries = 3;
+        $lru = new \LRUCache\LRUCache($numEntries);
+
+        $lru->put('key1', 'value1');
+        $lru->put('key2', 'value2');
+        $lru->put('key3', 'value3');
+
+        $ret = $lru->remove('key2');
+        $this->assertTrue($ret);
+
+        $this->assertNull($lru->get('key2'));
+
+        // test remove of already removed key
+        $ret = $lru->remove('key2');
+        $this->assertFalse($ret);
+
+        // make sure no side effects took place
+        $this->assertEquals($lru->get('key1'), 'value1');
+        $this->assertEquals($lru->get('key3'), 'value3');
+    }
+
     public function testPutWhenFull() {
         $lru = new \LRUCache\LRUCache(3);
 
