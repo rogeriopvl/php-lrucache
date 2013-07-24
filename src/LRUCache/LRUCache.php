@@ -88,6 +88,19 @@ class LRUCache {
     }
 
     /**
+     * Removes a key from the cache
+     * @param string $key key to remove
+     * @return bool true if removed, false if not found
+     */
+     public function remove($key) {
+       if (!isset($this->hashmap[$key])) { return false; }
+       $nodeToRemove = $this->hashmap[$key];
+       $this->detach($nodeToRemove);
+       unset($this->hashmap[$nodeToRemove->getKey()]);
+       return true;
+     }
+
+    /**
      * Adds a node to the head of the list
      * @param Node $head the node object that represents the head of the list
      * @param Node $node the node to move to the head of the list
