@@ -188,7 +188,7 @@ class Node {
 
     /**
      * Returns the node data
-     * @return string the content of the node
+     * @return mixed the content of the node
      */
     public function getData() {
         return $this->data;
